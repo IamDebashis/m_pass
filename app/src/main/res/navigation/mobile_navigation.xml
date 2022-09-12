@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_newRecordFragment"
             app:destination="@id/newRecordFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_passwordDetailsFragment"
+            app:destination="@id/passwordDetailsFragment" />
     </fragment>
 
     <fragment
@@ -43,4 +46,8 @@
         android:id="@+id/newRecordFragment"
         android:name="com.nide.mpass.ui.newrecord.NewRecordFragment"
         android:label="NewRecordFragment" />
+    <fragment
+        android:id="@+id/passwordDetailsFragment"
+        android:name="com.nide.mpass.ui.viewpassword.PasswordDetailsFragment"
+        android:label="PasswordDetailsFragment" />
 </navigation>

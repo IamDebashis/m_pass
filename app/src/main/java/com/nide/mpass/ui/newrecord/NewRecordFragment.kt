@@ -1,5 +1,7 @@
 package com.nide.mpass.ui.newrecord
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,8 @@ import android.widget.SeekBar
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.nide.mpass.R
 import com.nide.mpass.databinding.FragmentNewRecordBinding
 import com.nide.mpass.util.hide
@@ -26,6 +30,19 @@ class NewRecordFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment_activity_main
+            duration = 300
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(requireContext().getColor(R.color.white))
+        }
+
+
     }
 
     override fun onCreateView(
