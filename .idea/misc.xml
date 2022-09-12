@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/circle_progress.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_arrow_left_line.xml" value="0.1" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_copy.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_home_fill.xml" value="0.1" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_home_icon.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_lock_filled.xml" value="0.1" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_lock_icon.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1775" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_search_icon.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_setting_icon.xml" value="0.1185" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/rect_brackground.xml" value="0.1605" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/search_background.xml" value="0.1" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_analysis.xml" value="0.2" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_dashboard.xml" value="0.22" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_new_record.xml" value="0.22" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_notifications.xml" value="0.16576086956521738" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_password_details.xml" value="0.16576086956521738" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_setting.xml" value="0.22" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/item_password.xml" value="0.5" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/item_sec_password.xml" value="0.5" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/layout_pass_gen_config.xml" value="0.25" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/layout_security.xml" value="0.33" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/menu/bottom_nav_menu.xml" value="0.209375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
