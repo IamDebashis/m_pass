@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.1" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/circle_progress.xml" value="0.1185" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_arrow_left_line.xml" value="0.1" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/ic_copy.xml" value="0.1185" />
@@ -17,10 +18,11 @@
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/rect_brackground.xml" value="0.1605" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/drawable/search_background.xml" value="0.1" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/add_category_bottom_sheet.xml" value="0.22" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_analysis.xml" value="0.2" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_dashboard.xml" value="0.22" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_home.xml" value="0.22" />
-        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_new_record.xml" value="0.18" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_new_record.xml" value="0.25" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_notifications.xml" value="0.16576086956521738" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_password_details.xml" value="0.25" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_search.xml" value="0.25" />

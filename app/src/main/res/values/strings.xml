@@ -16,4 +16,22 @@
     <string name="sync">Sync</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <array name="category_name">
+        <item>Others</item>
+        <item>Arts</item>
+        <item>Business</item>
+        <item>Education</item>
+        <item>Email</item>
+        <item>Finance</item>
+        <item>Games</item>
+        <item>General</item>
+        <item>Tools</item>
+        <item>Shopping</item>
+        <item>Social Media</item>
+
+    </array>
+
+
+
 </resources>

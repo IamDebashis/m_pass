@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.nide.mpass.R
 import com.nide.mpass.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
 
     companion object {

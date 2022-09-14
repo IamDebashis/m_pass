@@ -7,8 +7,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.nide.mpass.R
 import com.nide.mpass.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
