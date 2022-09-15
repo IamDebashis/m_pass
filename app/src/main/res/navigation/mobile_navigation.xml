@@ -49,5 +49,9 @@
     <fragment
         android:id="@+id/passwordDetailsFragment"
         android:name="com.nide.mpass.ui.viewpassword.PasswordDetailsFragment"
-        android:label="PasswordDetailsFragment" />
+        android:label="PasswordDetailsFragment" >
+        <argument
+            android:name="password_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -13,7 +13,7 @@ class PasswordLocalDataSource(private val passwordDao: PasswordDao) {
     fun getAllPassword() = passwordDao.getAllPassword()
 
 
-    fun getPassword(id: Int) = passwordDao.getPasswordById(id)
+    fun getPasswordById(id: Int) = passwordDao.getPasswordById(id)
 
 
     fun insertPassword(password: Password) = CoroutineScope(Dispatchers.IO).launch {
@@ -29,7 +29,7 @@ class PasswordLocalDataSource(private val passwordDao: PasswordDao) {
     }
 
     fun deleteAllPasswords() = CoroutineScope(Dispatchers.IO).launch {
-//        passwordDao.deleteAllPassword()
+        passwordDao.deleteAllPassword()
     }
 
     fun getPasswordsByCategory(categoryId: Int) = passwordDao.getPasswordByCategory(categoryId)

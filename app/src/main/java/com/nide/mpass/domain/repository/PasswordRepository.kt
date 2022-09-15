@@ -7,5 +7,8 @@ interface PasswordRepository {
 
     fun getAllPasswords(): Flow<List<Password>>
     fun insertPassword(password: Password)
+    fun deletePassword(password: Password)
+    fun updatePassword(password: Password)
+    fun getPasswordById(id: Int): Flow<Password>
 
 }

@@ -16,6 +16,18 @@ class PasswordRepositoryImpl(private val passwordLocalDataSource: PasswordLocalD
         passwordLocalDataSource.insertPassword(password)
     }
 
+    override fun deletePassword(password: Password) {
+        passwordLocalDataSource.deletePassword(password)
+    }
+
+    override fun updatePassword(password: Password) {
+        passwordLocalDataSource.updatePassword(password)
+    }
+
+    override fun getPasswordById(id: Int): Flow<Password> {
+        return passwordLocalDataSource.getPasswordById(id)
+    }
+
     private fun getPasswordFromDb(): Flow<List<Password>> {
         return passwordLocalDataSource.getAllPassword()
     }

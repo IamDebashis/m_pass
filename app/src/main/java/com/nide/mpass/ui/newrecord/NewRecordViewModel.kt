@@ -1,5 +1,6 @@
 package com.nide.mpass.ui.newrecord
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nide.mpass.data.module.Category
 import com.nide.mpass.data.module.Password
@@ -16,6 +17,9 @@ class NewRecordViewModel @Inject constructor(
   private val getAllCategoryUseCase: GetAllCategoryUseCase
 ) : ViewModel() {
 
+    val fieldPosition = MutableLiveData<Category>().apply {
+
+    }
 
     fun saveNewPassword(password: Password) {
         saveNewPasswordUseCase.execute(password)

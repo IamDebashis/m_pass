@@ -11,12 +11,12 @@ import javax.crypto.spec.SecretKeySpec
 object AESEncryption {
 
 
-    const val secretKey = BuildConfig.
-    const val salt = "QWlGNHNhMTJTQWZ2bGhpV3U=" // base64 decode => AiF4sa12SAfvlhiWu
-    const val iv = "bVQzNFNhRkQ1Njc4UUFaWA==" // base64 decode => mT34SaFD5678QAZX
+    private const val secretKey = BuildConfig.SECRET_KEY
+    private const val salt = BuildConfig.SALT_KEY
+    private const val iv = BuildConfig.IV_KEY
 
     fun String.encrypt() :  String?
-    { 
+    {
         try
         {
             val ivParameterSpec = IvParameterSpec(Base64.decode(iv, Base64.DEFAULT))

@@ -19,9 +19,7 @@ class HomeViewModel @Inject constructor(
     private val getAllPasswordUseCase: GetAllPasswordUseCase
 ) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
+
 
      val passwords = getAllPasswordUseCase.execute()
 

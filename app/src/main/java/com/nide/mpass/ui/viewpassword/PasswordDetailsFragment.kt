@@ -1,21 +1,33 @@
 package com.nide.mpass.ui.viewpassword
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialFadeThrough
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.nide.mpass.R
 import com.nide.mpass.databinding.FragmentPasswordDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
-
+@AndroidEntryPoint
 class PasswordDetailsFragment : Fragment() {
 
     private var _binding: FragmentPasswordDetailsBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
+
+    val args: PasswordDetailsFragmentArgs by navArgs()
+
+   private val viewModel: PasswordDetailsViewModel by viewModels()
 
     override fun onDestroy() {
         super.onDestroy()
@@ -25,9 +37,12 @@ class PasswordDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       enterTransition = MaterialFadeThrough().apply {
-           duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
-       }
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment_activity_main
+            duration = 300
+            scrimColor = Color.WHITE
+            setAllContainerColors(requireContext().getColor(R.color.white))
+        }
 
     }
 
@@ -46,6 +61,27 @@ class PasswordDetailsFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.getPasswordById(args.passwordId).collectLatest {
+                binding.apply {
+                    tvTitle.text = it.name
+                    tvUserName.text = it.userId
+                    tvUserId.text = it.userId
+                    tvPassword.text = it.password
+                    tvLink.text = it.url
+                }
+            }
+        }
+        /*viewModel.getPasswordById(args.passwordId).asLiveData().observe(viewLifecycleOwner) {
+            binding.apply {
+                tvTitle.text = it.name
+                tvUserName.text = it.userId
+                tvUserId.text = it.userId
+                tvPassword.text = it.password
+                tvLink.text = it.url
+            }
+        }*/
 
     }
 

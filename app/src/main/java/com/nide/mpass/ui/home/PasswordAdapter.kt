@@ -2,13 +2,16 @@ package com.nide.mpass.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nide.mpass.R
 import com.nide.mpass.data.module.Password
 import com.nide.mpass.databinding.ItemPasswordBinding
 
-class PasswordAdapter : ListAdapter<Password, PasswordAdapter.PasswordViewHolder>(diffCallback) {
+class PasswordAdapter(private val onItemClick:(Password,TextView,ImageView)->Unit) : ListAdapter<Password, PasswordAdapter.PasswordViewHolder>(diffCallback) {
 
     private companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Password>() {
@@ -41,8 +44,19 @@ class PasswordAdapter : ListAdapter<Password, PasswordAdapter.PasswordViewHolder
         RecyclerView.ViewHolder(binding.root) {
 
             fun bind(password: Password){
+                binding.apply {
+                    tvTitle.text = password.name
+                   tvUserId.text = password.userId
+                }
+                binding.tvTitle.transitionName = binding.tvTitle.context.getString(R.string.password_to_password_details_transaction, password.id.toString())
+                binding.ivIcon.transitionName = binding.tvTitle.context.getString(R.string.password_to_password_details_image_transaction, password.id.toString())
+
+                binding.root.setOnClickListener {
+                    onItemClick.invoke(password,binding.tvTitle,binding.ivIcon)
+                }
 
             }
+
 
     }
 

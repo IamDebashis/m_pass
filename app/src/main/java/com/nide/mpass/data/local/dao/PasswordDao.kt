@@ -17,14 +17,14 @@ interface PasswordDao {
     @Delete
     suspend fun deletePassword(vararg password: Password)
 
-   /* @Query("DELETE * FROM $PASSWORD_TABLE")
-    suspend fun deleteAllPassword()*/
+    @Query("DELETE FROM $PASSWORD_TABLE")
+    suspend fun deleteAllPassword()
 
     @Query("SELECT * FROM $PASSWORD_TABLE")
     fun getAllPassword(): Flow<List<Password>>
 
     @Query("SELECT * FROM $PASSWORD_TABLE WHERE id = :id")
-    fun getPasswordById(id: Int): Password
+    fun getPasswordById(id: Int): Flow<Password>
 
     // get password by category
     @Query("SELECT * FROM $PASSWORD_TABLE WHERE category_id = :category")
