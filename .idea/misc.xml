@@ -25,7 +25,8 @@
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_new_record.xml" value="0.25" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_notifications.xml" value="0.16576086956521738" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_password_details.xml" value="0.25" />
-        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_profile.xml" value="0.16576086956521738" />
+        <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/fragment_setting.xml" value="0.22" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/item_password.xml" value="0.5" />
         <entry key="..\:/Android/projects/Mpass/app/src/main/res/layout/item_sec_password.xml" value="0.5" />

@@ -17,13 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/profile_button_description"
-                android:src="@drawable/ic_profile" />
 
             <TextView
                 style="@style/tvHeader"
@@ -33,6 +26,7 @@
                 android:text="@string/title_settings" />
 
             <ImageView
+                android:id="@+id/btn_add_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -58,26 +52,45 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/profile_container"
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/tvHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp">
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Debashis Halder" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_arrow_right" />
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/tvSubBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="62905909xx"
+                android:gravity="center"
+                />
 
-                <TextView
-                    style="@style/tvSubHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:text="@string/profile" />
-            </FrameLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_profile"
+                style="?attr/materialButtonOutlinedStyle"
+                app:cornerRadius="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+                android:text="@string/edit_profile" />
+
+
 
             <FrameLayout
                 android:id="@+id/permission_container"

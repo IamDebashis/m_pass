@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_passwordDetailsFragment"
             app:destination="@id/passwordDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -26,13 +29,23 @@
         <action
             android:id="@+id/action_navigation_analysis_to_newRecordFragment"
             app:destination="@id/newRecordFragment" />
+        <action
+            android:id="@+id/action_navigation_analysis_to_passwordDetailsFragment"
+            app:destination="@id/passwordDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_analysis_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
             android:id="@+id/navigation_search"
         android:name="com.nide.mpass.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_passwordDetailsFragment"
+            app:destination="@id/passwordDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.nide.mpass.ui.settings.SettingFragment"
@@ -41,6 +54,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_newRecordFragment"
             app:destination="@id/newRecordFragment" />
+        <action
+            android:id="@+id/action_navigation_settings_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/newRecordFragment"
@@ -54,4 +70,9 @@
             android:name="password_id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.nide.mpass.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

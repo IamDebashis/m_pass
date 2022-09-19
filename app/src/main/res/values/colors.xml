@@ -10,6 +10,7 @@
 
     <color name="primary">#292D32</color>
     <color name="gray">#DADADA</color>
+    <color name="deep_gray">#808080</color>
     <color name="blue">#105DFB</color>
     <color name="green">#1ED760</color>
     <color name="yellow">#F8981D</color>

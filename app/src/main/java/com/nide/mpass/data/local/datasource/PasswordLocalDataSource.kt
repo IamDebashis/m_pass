@@ -34,5 +34,8 @@ class PasswordLocalDataSource(private val passwordDao: PasswordDao) {
 
     fun getPasswordsByCategory(categoryId: Int) = passwordDao.getPasswordByCategory(categoryId)
 
+    fun getPasswordByIdWithCategory(id: Int) = passwordDao.getPasswordWithCategory(id)
+
+    fun getPasswordBySearch(query: String) = passwordDao.getPasswordBySearch(query)
 
 }

@@ -2,6 +2,7 @@ package com.nide.mpass.data.repositoryimpl
 
 import com.nide.mpass.data.local.datasource.PasswordLocalDataSource
 import com.nide.mpass.data.module.Password
+import com.nide.mpass.data.truple.PasswordTuple
 import com.nide.mpass.domain.repository.PasswordRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -28,10 +29,15 @@ class PasswordRepositoryImpl(private val passwordLocalDataSource: PasswordLocalD
         return passwordLocalDataSource.getPasswordById(id)
     }
 
+    override fun getPasswordByIdWithCategory(id: Int): Flow<PasswordTuple> {
+        return passwordLocalDataSource.getPasswordByIdWithCategory(id)
+    }
+
     private fun getPasswordFromDb(): Flow<List<Password>> {
         return passwordLocalDataSource.getAllPassword()
     }
 
-
-
+    override fun getPasswordBySearch(query: String): Flow<List<Password>> {
+        return passwordLocalDataSource.getPasswordBySearch(query)
+    }
 }

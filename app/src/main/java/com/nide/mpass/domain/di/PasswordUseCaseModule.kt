@@ -1,9 +1,7 @@
 package com.nide.mpass.domain.di
 
 import com.nide.mpass.domain.repository.PasswordRepository
-import com.nide.mpass.domain.usecase.GetAllPasswordUseCase
-import com.nide.mpass.domain.usecase.GetPasswordByIdUseCase
-import com.nide.mpass.domain.usecase.SaveNewPasswordUseCase
+import com.nide.mpass.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +24,16 @@ class PasswordUseCaseModule {
     @Provides
     fun provideGetPasswordById(repository: PasswordRepository): GetPasswordByIdUseCase {
         return GetPasswordByIdUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetPasswordByIdWithCategory(repository: PasswordRepository) : GetPasswordByIdWithCategory {
+    return GetPasswordByIdWithCategory(repository)
+    }
+
+    @Provides
+    fun provideSearchINPassword(repository: PasswordRepository) : SearchInPasswordUseCase{
+        return SearchInPasswordUseCase(repository)
     }
 
 

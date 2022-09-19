@@ -29,12 +29,11 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val adapter = PasswordAdapter { password, textView , image-> onItemClick(password, textView,image) }
+    private val adapter =
+        PasswordAdapter { password -> onItemClick(password) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
     }
 
@@ -67,7 +66,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_passwordDetailsFragment)
+            val action = HomeFragmentDirections.actionNavigationHomeToProfileFragment()
+            findNavController().navigate(action)
         }
 
         initRV()
@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onItemClick(password: Password, view: TextView ,image : ImageView) {
+    private fun onItemClick(password: Password) {
         exitTransition = MaterialElevationScale(false).apply {
             duration = resources.getInteger(
                 R.integer.reply_motion_duration_large
@@ -100,10 +100,10 @@ class HomeFragment : Fragment() {
         }
         val transitionName = getString(R.string.password_details_transaction)
         val passwordDetailsImage = getString(R.string.password_details_image_transaction)
-        val extras = FragmentNavigatorExtras(view to transitionName,image to passwordDetailsImage)
+
         val action =
             HomeFragmentDirections.actionNavigationHomeToPasswordDetailsFragment(password.id)
-        findNavController().navigate(action, extras)
+        findNavController().navigate(action)
 
 
     }

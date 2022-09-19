@@ -79,7 +79,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="web site / app name"
+                        android:hint="@string/web_site_app_name"
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingStart="0dp"
@@ -264,34 +264,21 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/password" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_password_field"
+            <com.nide.mpass.ui.view.PasswordWithIndicator
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginBottom="30dp"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_refresh"
-                app:hintEnabled="false">
+                />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:enabled="false"
-                    android:hint="password"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <FrameLayout
-                android:id="@+id/password_config_container"
+            <com.nide.mpass.ui.view.PasswordGenConfig
+                android:id="@+id/password_config"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <include
-                    android:id="@+id/password_config"
-                    layout="@layout/layout_pass_gen_config" />
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/tv_or"
@@ -310,7 +297,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:textAllCaps="false"
-                android:text="Add Manually" />
+                android:text="@string/generate_password" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -329,8 +316,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="write a note"
+                    android:inputType="textMultiLine"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

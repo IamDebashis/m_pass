@@ -15,7 +15,7 @@ interface CategoryDao {
     @Delete
     suspend fun deleteCategory(category: Category)
 
-    @Query("SELECT * FROM ${Category.CATEGORY_TABLE_NAME}")
+    @Query("SELECT * FROM ${Category.CATEGORY_TABLE}")
      fun getAllCategory(): Flow<List<Category>>
 
 

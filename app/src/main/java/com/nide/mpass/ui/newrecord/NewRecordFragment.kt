@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,7 +31,7 @@ class NewRecordFragment : Fragment() {
     private val TAG = this.javaClass.name
     private var _binding: FragmentNewRecordBinding? = null
     val binding get() = _binding!!
-    private var addPasswordManualState = true
+    private var addPasswordManualState = false
 
     private val viewModel: NewRecordViewModel by viewModels()
 
@@ -78,34 +79,44 @@ class NewRecordFragment : Fragment() {
 
             if (addPasswordManualState) {
                 addPasswordManualState = false
-                binding.btnManually.text = "Generate Password"
-                binding.passwordConfigContainer.hide()
-                binding.etPasswordField.editText!!.isEnabled = true
-                binding.etPasswordField.isEndIconVisible = false
+                binding.btnManually.text = getString(R.string.generate_password)
+                binding.passwordConfig.hide()
+                binding.etPassword.enableEditText(true)
 
 
             } else {
                 addPasswordManualState = true
-                binding.btnManually.text = "Add Manually"
-                binding.passwordConfigContainer.show()
-                binding.etPasswordField.editText!!.isEnabled = false
-                binding.etPasswordField.isEndIconVisible = true
+                binding.btnManually.text = getString(R.string.add_manually)
+                binding.passwordConfig.show()
+                val password = generatePassword()
+                binding.etPassword.setText(password)
+                binding.etPassword.enableEditText(false)
 
             }
         }
 
-        binding.etPasswordField.setEndIconOnClickListener {
-            context?.toast("Refresh")
+
+        binding.passwordConfig.setGenerateBtnClickListener {
+            val password = generatePassword()
+            binding.etPassword.setText(password)
         }
+        binding.passwordConfig.setSaveBtnClickListener {
+            addPasswordManualState = false
+            binding.btnManually.text = getString(R.string.generate_password)
+            binding.passwordConfig.hide()
+            binding.etPassword.enableEditText(true)
+        }
+
 
         binding.btnSave.setOnClickListener {
 
             val name = binding.etNameField.editText!!.text.toString()
-            val password = binding.etPasswordField.editText!!.text.toString()
+            val password = binding.etPassword.getText()
             val url = binding.etLinkField.editText!!.text.toString()
             val username = binding.etUseridField.editText!!.text.toString()
             val note = binding.etNoteField.editText!!.text.toString()
             val fieldId = viewModel.fieldPosition.value
+            Log.i(TAG, "initClickListener: $password")
             if (binding.etNameField.editText!!.validate() && binding.etUseridField.editText!!.validate()) {
 
                 if (password.isNotEmpty()) {
@@ -176,42 +187,29 @@ class NewRecordFragment : Fragment() {
 
         }
 
-        binding.passwordConfig.sbLength.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                binding.passwordConfig.tvLengthCount.text = progress.toString()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-
-        })
-
-        binding.passwordConfig.btnSave.setOnClickListener {
-            context?.toast("password Save")
-        }
-
-        binding.passwordConfig.btnRegenerate.setOnClickListener {
-            context?.toast("password Regenerate")
-        }
 
         binding.btnAddCategory.setOnClickListener {
             showBottomSheetDialog()
         }
 
+
+    }
+
+    private fun generatePassword(): String {
+        return PasswordBuilder(binding.passwordConfig.getLenth())
+            .isDigit(binding.passwordConfig.getNumberCheck())
+            .isUpperCase(binding.passwordConfig.getUppercaseCheck())
+            .isLowerCase(binding.passwordConfig.getLowercaseCheck())
+            .isSpecialChar(binding.passwordConfig.getSymbolCheck())
+            .build()
+            .generatePassword()
     }
 
 
     private fun observeData() {
         lifecycleScope.launchWhenStarted {
             viewModel.getAllCategory().collectLatest { categories ->
-                val names = categories.map { it.name }
+                val names = categories.map { it.categoryName }
                 val arrayAdapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, names)
                 val autoCompleteTextView = (binding.etField.editText as AutoCompleteTextView)

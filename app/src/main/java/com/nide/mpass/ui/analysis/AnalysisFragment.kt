@@ -5,16 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.nide.mpass.R
+import com.nide.mpass.data.module.Password
 import com.nide.mpass.databinding.FragmentAnalysisBinding
+import com.nide.mpass.ui.home.HomeFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
+
+@AndroidEntryPoint
 class AnalysisFragment : Fragment() {
 
     private var _binding: FragmentAnalysisBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: AnalysisViewModel by viewModels()
+
+    private val adapter = SecPasswordAdapter { password -> navigateToPasswordDetails(password) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +42,48 @@ class AnalysisFragment : Fragment() {
 
         return root
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRv()
+        obServeData()
+        initClick()
+    }
+
+    private fun initClick(){
+        binding.btnAddPassword.setOnClickListener{
+            val action = AnalysisFragmentDirections.actionNavigationAnalysisToNewRecordFragment()
+            findNavController().navigate(action)
+        }
+        binding.btnProfile.setOnClickListener {
+            val action = AnalysisFragmentDirections.actionNavigationAnalysisToProfileFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+
+    private fun setupRv() {
+        binding.rvAnalysis.adapter = adapter
+    }
+
+    private fun obServeData() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.passwords.collectLatest {
+                adapter.submitList(it)
+            }
+        }
+
+
+    }
+
+    private fun navigateToPasswordDetails(password: Password) {
+        val action =
+            AnalysisFragmentDirections.actionNavigationAnalysisToPasswordDetailsFragment(password.id)
+        findNavController().navigate(action)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,13 +1,43 @@
 package com.nide.mpass.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.nide.mpass.data.module.Password
+import com.nide.mpass.domain.usecase.GetAllCategoryUseCase
+import com.nide.mpass.domain.usecase.SearchInPasswordUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SearchViewModel : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val searchInPasswordUseCase: SearchInPasswordUseCase,
+    private val getAllCategoryUseCase: GetAllCategoryUseCase
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    val allCategories = getAllCategoryUseCase.execute()
+
+    private val _query = MutableLiveData<String>()
+    private val _filterBy = MutableLiveData<List<Int>>()
+    private val filterPasswordResult = MutableLiveData<List<Password>>()
+
+    val searchPassword = _query.switchMap {
+      searchInPasswordUseCase.execute(it).asLiveData()
     }
-    val text: LiveData<String> = _text
+
+
+
+    val filterPasswords  = searchPassword.switchMap { passwords ->
+      val filtered =  passwords.filter { _filterBy.value?.contains(it.categoryId) ?: true   }
+        filterPasswordResult.postValue(filtered)
+        filterPasswordResult
+    }
+
+    fun fiterBy(fields: List<Int>){
+        _filterBy.postValue(fields)
+    }
+
+    fun search(query: String){
+        _query.postValue(query)
+    }
+
+
 }
