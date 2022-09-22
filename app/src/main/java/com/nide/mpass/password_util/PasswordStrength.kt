@@ -1,4 +1,4 @@
-package com.nide.mpass.util
+package com.nide.mpass.password_util
 
 import java.util.regex.Pattern
 

@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nide.mpass.R
 import com.nide.mpass.data.module.Password
 import com.nide.mpass.databinding.ItemPasswordBinding
+import com.nide.mpass.util.AESEncryption.decrypt
 import com.nide.mpass.util.AvaterCreator
 import com.nide.mpass.util.RandomColors
+import com.nide.mpass.util.copyToClipBoard
+import com.nide.mpass.util.toast
 
 class PasswordAdapter(private val onItemClick:(Password)->Unit) : ListAdapter<Password, PasswordAdapter.PasswordViewHolder>(diffCallback) {
 
@@ -50,6 +53,16 @@ class PasswordAdapter(private val onItemClick:(Password)->Unit) : ListAdapter<Pa
                     tvTitle.text = password.name
                    tvUserId.text = password.userId
                 }
+
+                binding.btnCopy.setOnClickListener {
+                    if(password.password?.isBlank()==true){
+                        binding.root.context.toast("There are no password !")
+                    }else{
+                    binding.root.context.copyToClipBoard("password",password.password!!.decrypt()?:"")
+                        binding.root.context.toast("Password copied")
+                    }
+                }
+
                 binding.tvTitle.transitionName = binding.tvTitle.context.getString(R.string.password_to_password_details_transaction, password.id.toString())
                 binding.ivIcon.transitionName = binding.tvTitle.context.getString(R.string.password_to_password_details_image_transaction, password.id.toString())
 

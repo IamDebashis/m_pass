@@ -69,10 +69,21 @@
         <argument
             android:name="password_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_passwordDetailsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.nide.mpass.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.nide.mpass.ui.update.UpdateFragment"
+        android:label="UpdateFragment" >
+        <argument
+            android:name="passId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

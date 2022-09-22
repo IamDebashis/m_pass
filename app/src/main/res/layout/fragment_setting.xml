@@ -120,7 +120,7 @@
                 android:padding="10dp"
                 android:paddingStart="20dp">
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_sync"
                     style="@style/tvSubHeader"
                     android:layout_width="match_parent"

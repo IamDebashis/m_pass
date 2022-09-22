@@ -1,76 +1,153 @@
-package com.nide.mpass.ui.newrecord
+package com.nide.mpass.ui.update
 
-import android.graphics.Color
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.nide.mpass.R
 import com.nide.mpass.data.module.Category
 import com.nide.mpass.data.module.Password
-import com.nide.mpass.databinding.FragmentNewRecordBinding
+import com.nide.mpass.databinding.FragmentUpdateBinding
 import com.nide.mpass.password_util.PasswordBuilder
-import com.nide.mpass.util.*
+import com.nide.mpass.util.AESEncryption.decrypt
 import com.nide.mpass.util.AESEncryption.encrypt
+import com.nide.mpass.util.hide
+import com.nide.mpass.util.show
+import com.nide.mpass.util.toast
+import com.nide.mpass.util.validate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NewRecordFragment : Fragment() {
-    private val TAG = this.javaClass.name
-    private var _binding: FragmentNewRecordBinding? = null
+class UpdateFragment : Fragment() {
+
+    private var _binding: FragmentUpdateBinding? = null
     val binding get() = _binding!!
+
+    private val args by navArgs<UpdateFragmentArgs>()
+    private val viewModel: UpdateViewModel by viewModels()
     private var addPasswordManualState = false
 
-    private val viewModel: NewRecordViewModel by viewModels()
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            drawingViewId = R.id.nav_host_fragment_activity_main
-            duration = 300
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(requireContext().getColor(R.color.white))
-        }
-
-
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentNewRecordBinding.inflate(inflater, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+
+        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initClickListener()
+
         observeData()
+        initClick()
     }
 
+    private fun observeData() {
+        lifecycleScope.launchWhenStarted {
 
-    private fun initClickListener() {
+            launch {
+                viewModel.getAllCategory().collectLatest { categories ->
+                    val names = categories.map { it.categoryName }
+                    val arrayAdapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, names)
+                    val autoCompleteTextView = (binding.etField.editText as AutoCompleteTextView)
+                    autoCompleteTextView.setAdapter(arrayAdapter)
+                    autoCompleteTextView.onItemClickListener =
+                        AdapterView.OnItemClickListener { parent, view, position, id ->
+                            val item = categories[position]
+                            viewModel.fieldPosition.postValue(item)
+                        }
+                }
+            }
+            launch {
+                viewModel.getPassword(args.passId).collectLatest { password ->
+                    binding.apply {
+                        etNameField.editText?.setText(password.name)
+                        etUseridField.editText?.setText(password.userId)
+                        etLinkField.editText?.setText(password.url)
+                        password.password?.let { etPassword.setText(it.decrypt()?:"") }
+                        etNoteField.editText?.setText(password.notes)
+                    }
+                    viewModel.fieldPosition.postValue(
+                        Category(
+                            password.categoryId!!,
+                            password.categoryName
+                        )
+                    )
+                    val autoCompleteTextView = (binding.etField.editText as AutoCompleteTextView)
+                    autoCompleteTextView.setText(password.categoryName, false)
+                }
+            }
+
+        }
+
+    }
+
+    private fun  initClick(){
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.btnUpdate.setOnClickListener {
+
+            val name = binding.etNameField.editText!!.text.toString()
+            val password = binding.etPassword.getText()
+            val url = binding.etLinkField.editText!!.text.toString()
+            val username = binding.etUseridField.editText!!.text.toString()
+            val note = binding.etNoteField.editText!!.text.toString()
+            val fieldId = viewModel.fieldPosition.value
+            if (binding.etNameField.editText!!.validate() && binding.etUseridField.editText!!.validate()) {
+
+                if (password.isNotEmpty()) {
+                    val enPass = password.encrypt()
+                    if (enPass != null) {
+                        viewModel.updatePassword(
+                            Password(
+                                id = args.passId,
+                                name = name,
+                                userId = username,
+                                password = enPass,
+                                url = url,
+                                categoryId = fieldId?.id,
+                                notes = note
+                            )
+                        )
+                        findNavController().navigateUp()
+                    } else {
+                        context?.toast("Something went wrong, please try again")
+                    }
+
+                } else {
+                    viewModel.updatePassword(
+                        Password(
+                            id = args.passId,
+                            name = name,
+                            userId = username,
+                            password = password,
+                            url = url,
+                            categoryId = fieldId?.id,
+                            notes = note
+                        )
+                    )
+                    findNavController().navigateUp()
+                }
+
+
+            }
+
+
         }
 
         binding.btnManually.setOnClickListener {
@@ -94,67 +171,6 @@ class NewRecordFragment : Fragment() {
         }
 
 
-        binding.passwordConfig.setGenerateBtnClickListener {
-            val password = generatePassword()
-            binding.etPassword.setText(password)
-        }
-        binding.passwordConfig.setSaveBtnClickListener {
-            addPasswordManualState = false
-            binding.btnManually.text = getString(R.string.generate_password)
-            binding.passwordConfig.hide()
-            binding.etPassword.enableEditText(true)
-        }
-
-
-        binding.btnSave.setOnClickListener {
-
-            val name = binding.etNameField.editText!!.text.toString()
-            val password = binding.etPassword.getText()
-            val url = binding.etLinkField.editText!!.text.toString()
-            val username = binding.etUseridField.editText!!.text.toString()
-            val note = binding.etNoteField.editText!!.text.toString()
-            val fieldId = viewModel.fieldPosition.value
-            if (binding.etNameField.editText!!.validate() && binding.etUseridField.editText!!.validate()) {
-
-                if (password.isNotEmpty()) {
-                    val enPass = password.encrypt()
-                    if (enPass != null) {
-                        viewModel.saveNewPassword(
-                            Password(
-                                id = 0,
-                                name = name,
-                                userId = username,
-                                password = enPass,
-                                url = url,
-                                categoryId = fieldId?.id,
-                                notes = note
-                            )
-                        )
-                        findNavController().navigateUp()
-                    } else {
-                        context?.toast("Something went wrong, please try again")
-                    }
-
-                } else {
-                    viewModel.saveNewPassword(
-                        Password(
-                            id = 0,
-                            name = name,
-                            userId = username,
-                            password = password,
-                            url = url,
-                            categoryId = fieldId?.id,
-                            notes = note
-                        )
-                    )
-                    findNavController().navigateUp()
-                }
-
-
-            }
-
-
-        }
 
         binding.etNameField.editText!!.doOnTextChanged { text, start, before, count ->
             if (text!!.trim().isNotEmpty()) {
@@ -189,7 +205,6 @@ class NewRecordFragment : Fragment() {
             showBottomSheetDialog()
         }
 
-
     }
 
     private fun generatePassword(): String {
@@ -200,28 +215,6 @@ class NewRecordFragment : Fragment() {
             .isSpecialChar(binding.passwordConfig.getSymbolCheck())
             .build()
             .generatePassword()
-    }
-
-
-    private fun observeData() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.getAllCategory().collectLatest { categories ->
-                val names = categories.map { it.categoryName }
-                val arrayAdapter =
-                    ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, names)
-                val autoCompleteTextView = (binding.etField.editText as AutoCompleteTextView)
-                autoCompleteTextView.setAdapter(arrayAdapter)
-                autoCompleteTextView.setText(arrayAdapter.getItem(0), false)
-                viewModel.fieldPosition.postValue(categories[0])
-                autoCompleteTextView.onItemClickListener =
-                    AdapterView.OnItemClickListener { parent, view, position, id ->
-                        val item = categories[position]
-                        viewModel.fieldPosition.postValue(item)
-                    }
-            }
-        }
-
-
     }
 
     private fun showBottomSheetDialog() {
@@ -239,6 +232,9 @@ class NewRecordFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }

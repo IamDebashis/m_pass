@@ -16,8 +16,6 @@
     <string name="sync">Sync</string>
 
 
-
-
     <string name="password_to_password_details_transaction">passwordToPasswordDetails_%1$s</string>
     <string name="password_to_password_details_image_transaction">passwordToPasswordImageDetails_%1$s</string>
     <string name="password_details_transaction">passwordToPasswordDetails</string>

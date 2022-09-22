@@ -1,15 +1,12 @@
-package com.nide.mpass.ui.view
+package com.nide.mpass.ui.costomeview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
-import com.nide.mpass.R
 import com.nide.mpass.databinding.PasswordInputLayoutBinding
-import com.nide.mpass.util.PasswordStrength
+import com.nide.mpass.password_util.PasswordStrength
 import com.nide.mpass.util.setProgressWithColor
 
 class PasswordWithIndicator @JvmOverloads

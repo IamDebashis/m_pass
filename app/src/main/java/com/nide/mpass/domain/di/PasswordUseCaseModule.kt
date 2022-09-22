@@ -36,5 +36,9 @@ class PasswordUseCaseModule {
         return SearchInPasswordUseCase(repository)
     }
 
+    @Provides
+    fun provideUpdatePassword(repository: PasswordRepository): UpdatePasswordUseCase{
+        return UpdatePasswordUseCase(repository)
+    }
 
 }

@@ -61,6 +61,7 @@
             android:orientation="vertical" >
 
             <include
+                android:id="@+id/dashboard"
                 layout="@layout/layout_security"
                  />
 

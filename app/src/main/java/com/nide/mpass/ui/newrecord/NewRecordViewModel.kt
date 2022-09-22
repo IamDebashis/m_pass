@@ -17,9 +17,7 @@ class NewRecordViewModel @Inject constructor(
   private val getAllCategoryUseCase: GetAllCategoryUseCase
 ) : ViewModel() {
 
-    val fieldPosition = MutableLiveData<Category>().apply {
-
-    }
+    val fieldPosition = MutableLiveData<Category>()
 
     fun saveNewPassword(password: Password) {
         saveNewPasswordUseCase.execute(password)

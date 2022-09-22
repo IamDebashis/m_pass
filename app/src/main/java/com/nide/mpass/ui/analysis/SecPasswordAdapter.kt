@@ -7,14 +7,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nide.mpass.data.module.Password
-import com.nide.mpass.databinding.FragmentProfileBinding
 import com.nide.mpass.databinding.ItemSecPasswordBinding
-import com.nide.mpass.ui.home.PasswordAdapter
 import com.nide.mpass.util.AvaterCreator
-import com.nide.mpass.util.PasswordStrength
+import com.nide.mpass.password_util.PasswordStrength
+import com.nide.mpass.util.AESEncryption.decrypt
 import com.nide.mpass.util.setProgressWithColor
+import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope.coroutineContext
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
-class SecPasswordAdapter(private val onItemClick:(Password)->Unit) :
+class SecPasswordAdapter(private val onItemClick: (Password) -> Unit) :
     ListAdapter<Password, SecPasswordAdapter.SecPasswordViewHolder>(secPasswordCallback) {
 
 
@@ -50,15 +53,26 @@ class SecPasswordAdapter(private val onItemClick:(Password)->Unit) :
     inner class SecPasswordViewHolder(private val binding: ItemSecPasswordBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(password: Password) {
+        fun bind(password: Password) = CoroutineScope(Dispatchers.Main).launch {
 
             binding.root.setOnClickListener {
                 onItemClick.invoke(password)
             }
-            binding.progressBar.setProgressWithColor(PasswordStrength(password.password?:"").check())
-            Glide.with(binding.root.context)
-                .load(AvaterCreator.AvatarBuilder(binding.root.context).setAvatarSize(200).setTextSize(50).setLabel(password.name).toCircle().build())
-                .into(binding.ivIcon)
+            val score = async(Dispatchers.Default){ getSequreValue(password.password ?: "") }
+            async {
+                Glide.with(binding.root.context)
+                    .load(
+                        AvaterCreator.AvatarBuilder(binding.root.context).setAvatarSize(200)
+                            .setTextSize(50).setLabel(password.name).toCircle().build()
+                    )
+                    .into(binding.ivIcon)
+            }
+            binding.progressBar.setProgressWithColor(score.await())
+        }
+
+        private suspend fun getSequreValue(password: String): Int = coroutineScope {
+            val decryptPassword = password.decrypt()
+            return@coroutineScope PasswordStrength(decryptPassword ?: "").check()
         }
 
 

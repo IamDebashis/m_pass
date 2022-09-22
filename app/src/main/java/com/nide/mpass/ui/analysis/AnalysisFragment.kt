@@ -12,8 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.nide.mpass.R
 import com.nide.mpass.data.module.Password
 import com.nide.mpass.databinding.FragmentAnalysisBinding
+import com.nide.mpass.password_util.PasswordUtil
 import com.nide.mpass.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -51,8 +55,8 @@ class AnalysisFragment : Fragment() {
         initClick()
     }
 
-    private fun initClick(){
-        binding.btnAddPassword.setOnClickListener{
+    private fun initClick() {
+        binding.btnAddPassword.setOnClickListener {
             val action = AnalysisFragmentDirections.actionNavigationAnalysisToNewRecordFragment()
             findNavController().navigate(action)
         }
@@ -72,10 +76,24 @@ class AnalysisFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.passwords.collectLatest {
                 adapter.submitList(it)
+                async {
+                    setAnalysisData(it)
+                }
             }
         }
+    }
 
-
+    private suspend fun setAnalysisData(passList: List<Password>) = withContext(Default) {
+        val util = PasswordUtil()
+        val sequre = util.checkSequrePasswords(passList)
+        launch(Main) {
+            binding.dashboard.cpAnalytics.progress = sequre.toFloat()
+            binding.dashboard.tvProgresText.text = "$sequre %"
+            binding.dashboard.tvSecureText.text = "$sequre secure"
+            binding.dashboard.tvWeekNumber.text = util.totalWeek.toString()
+            binding.dashboard.tvSafeNumber.text = util.totalSafe.toString()
+            binding.dashboard.tvRiskNumber.text = util.totalRisk.toString()
+        }
     }
 
     private fun navigateToPasswordDetails(password: Password) {

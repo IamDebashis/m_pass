@@ -1,4 +1,4 @@
-package com.nide.mpass.util
+package com.nide.mpass.password_util
 
 
 class PasswordGenerator constructor(private val builder: PasswordBuilder, private val length: Int) {

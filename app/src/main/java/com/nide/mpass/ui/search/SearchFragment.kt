@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
-import com.nide.mpass.R
 import com.nide.mpass.data.module.Password
 import com.nide.mpass.databinding.FragmentSearchBinding
 import com.nide.mpass.databinding.StandaloneChipBinding
@@ -21,7 +19,6 @@ import com.nide.mpass.ui.home.PasswordAdapter
 import com.nide.mpass.util.showSoftKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -71,11 +68,12 @@ class SearchFragment : Fragment() {
 
     private fun initClicks() {
         binding.cgCategoryFilter.setOnCheckedStateChangeListener { group, checkedIds ->
-            viewModel.fiterBy(checkedIds)
+            viewModel.filterBy(checkedIds)
         }
 
         binding.inpSearch.doOnTextChanged { text, start, before, count ->
-            if(text?.toString()?.trim()?.isNotEmpty() == true && count > 0) {
+            Log.i(TAG, "initClicks outside: $text ,start:$start, before: $before, count:$count")
+            if(text?.isNotBlank() == true) {
                 viewModel.search(text.toString())
                 Log.i(TAG, "initClicks: $text")
             }
@@ -101,12 +99,13 @@ class SearchFragment : Fragment() {
                 }
             }
             launch {
-                viewModel.filterPasswords.observe(viewLifecycleOwner) {
+                viewModel.filterPassword.collectLatest {
                     adapter.submitList(it)
                 }
-
             }
         }
+
+
     }
 
 

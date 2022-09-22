@@ -1,4 +1,4 @@
-package com.nide.mpass.ui.view
+package com.nide.mpass.ui.costomeview
 
 import android.content.Context
 import android.util.AttributeSet
