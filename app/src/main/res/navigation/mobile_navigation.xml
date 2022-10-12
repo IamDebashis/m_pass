@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.nide.mpass.ui.home.HomeFragment"
+        android:name="com.nide.pocketpass.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_analysis"
-        android:name="com.nide.mpass.ui.analysis.AnalysisFragment"
+        android:name="com.nide.pocketpass.ui.analysis.AnalysisFragment"
         android:label="@string/title_analysis"
         tools:layout="@layout/fragment_analysis" >
         <action
@@ -39,7 +39,7 @@
 
     <fragment
             android:id="@+id/navigation_search"
-        android:name="com.nide.mpass.ui.search.SearchFragment"
+        android:name="com.nide.pocketpass.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.nide.mpass.ui.settings.SettingFragment"
+        android:name="com.nide.pocketpass.ui.settings.SettingFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_setting" >
         <action
@@ -60,11 +60,11 @@
     </fragment>
     <fragment
         android:id="@+id/newRecordFragment"
-        android:name="com.nide.mpass.ui.newrecord.NewRecordFragment"
+        android:name="com.nide.pocketpass.ui.newrecord.NewRecordFragment"
         android:label="NewRecordFragment" />
     <fragment
         android:id="@+id/passwordDetailsFragment"
-        android:name="com.nide.mpass.ui.viewpassword.PasswordDetailsFragment"
+        android:name="com.nide.pocketpass.ui.viewpassword.PasswordDetailsFragment"
         android:label="PasswordDetailsFragment" >
         <argument
             android:name="password_id"
@@ -75,15 +75,21 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.nide.mpass.ui.profile.ProfileFragment"
+        android:name="com.nide.pocketpass.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.nide.mpass.ui.update.UpdateFragment"
+        android:name="com.nide.pocketpass.ui.update.UpdateFragment"
         android:label="UpdateFragment" >
         <argument
             android:name="passId"
             app:argType="integer" />
     </fragment>
+
+ <!--   <action
+        android:id="@+id/global_new_record_fragment"
+        app:destination="@id/newRecordFragment"
+        />
+-->
 </navigation>

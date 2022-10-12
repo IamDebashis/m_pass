@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="site_name">
+        <item>facebook.com</item>
+        <item>google.com</item>
+        <item>twitter.com</item>
+        <item>instagram.com</item>
+        <item>baidu.com</item>
+        <item>wikipedia.org</item>
+        <item>yandex.ru</item>
+        <item>yahoo.com</item>
+        <item>whatsapp.com</item>
+        <item>live.com</item>
+        <item>netflix.com</item>
+        <item>reddit.com</item>
+        <item>tiktok.com</item>
+        <item>linkedin.com</item>
+        <item>office.com</item>
+        <item>samsung.com</item>
+        <item>turbopages.org</item>
+        <item>vk.com</item>
+        <item>weather.com</item>
+        <item>twitch.tv</item>
+        <item>mail.ru</item>
+        <item>naver.com</item>
+        <item>discord.com</item>
+        <item>bing.com</item>
+        <item>roblox.com</item>
+        <item>bilibili.com</item>
+        <item>microsoftonline.com</item>
+        <item>pinterest.com</item>
+        <item>zoom.us</item>
+        <item>microsoft.com</item>
+        <item>fandom.com</item>
+        <item>quora.com</item>
+        <item>ebay.com</item>
+        <item>msn.com</item>
+        <item>globo.com</item>
+        <item>stripchat.com</item>
+        <item>booking.com</item>
+        <item>amazon.in</item>
+        <item>flipkart.com</item>
+        <item>imdb.com</item>
+        <item>hotstart.com</item>
+        <item>apple.com</item>
+        <item>mi.com</item>
+        <item>spotify.com</item>
+    </string-array>
+
+
+</resources>

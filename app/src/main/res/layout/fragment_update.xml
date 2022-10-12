@@ -265,7 +265,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/password" />
 
-            <com.nide.mpass.ui.costomeview.PasswordWithIndicator
+            <com.nide.pocketpass.ui.costomeview.PasswordWithIndicator
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -274,7 +274,7 @@
                 android:layout_marginBottom="30dp"
                 />
 
-            <com.nide.mpass.ui.costomeview.PasswordGenConfig
+            <com.nide.pocketpass.ui.costomeview.PasswordGenConfig
                 android:id="@+id/password_config"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

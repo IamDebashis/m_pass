@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="shared_element_container"
-
+    android:transitionName="@string/new_record_shared_transaction"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
-                android:text="Save" />
+                android:text="@string/save" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -64,7 +63,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:paddingStart="24dp"
-                    android:text="Name" />
+                    android:text="@string/name" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_name_field"
@@ -76,16 +75,18 @@
                     android:padding="0dp"
                     app:hintEnabled="false">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/web_site_app_name"
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingStart="0dp"
-                        android:paddingBottom="2dp"
+                        android:paddingBottom="0dp"
+                        android:completionThreshold="2"
                         android:textColor="@color/primary"
                         android:textSize="16sp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -112,7 +113,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:paddingStart="24dp"
-                    android:text="User id" />
+                    android:text="@string/user_id" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +129,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="https://example.com"
+                        android:hint="@string/user_id_hint"
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingStart="0dp"
@@ -161,7 +162,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:paddingStart="24dp"
-                    android:text="link" />
+                    android:text="@string/link" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -177,7 +178,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="https://example.com"
+                        android:hint="@string/url_hint"
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingStart="0dp"
@@ -192,7 +193,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_tick_circle" />
+                    app:srcCompat="@drawable/ic_tick_circle"
+                    android:contentDescription="@string/tick_mark" />
             </LinearLayout>
 
             <LinearLayout
@@ -210,7 +212,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:paddingStart="24dp"
-                    android:text="Field" />
+                    android:text="@string/field" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -228,6 +230,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         android:padding="10dp"
+                        android:hint="@string/select_field"
                         android:paddingStart="10dp"
                         android:paddingBottom="2dp"
                         android:textColor="@color/primary"
@@ -243,7 +246,8 @@
                     android:clickable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="10dp"
-                    app:srcCompat="@drawable/ic_add" />
+                    app:srcCompat="@drawable/ic_add"
+                    android:contentDescription="@string/add_new_field" />
             </LinearLayout>
 
             <View
@@ -264,7 +268,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/password" />
 
-            <com.nide.mpass.ui.costomeview.PasswordWithIndicator
+            <com.nide.pocketpass.ui.costomeview.PasswordWithIndicator
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -273,7 +277,7 @@
                 android:layout_marginBottom="30dp"
                 />
 
-            <com.nide.mpass.ui.costomeview.PasswordGenConfig
+            <com.nide.pocketpass.ui.costomeview.PasswordGenConfig
                 android:id="@+id/password_config"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -287,7 +291,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="OR" />
+                android:text="@string/or" />
 
             <Button
                 android:id="@+id/btn_manually"
@@ -315,7 +319,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="write a note"
+                    android:hint="@string/write_a_note_hint"
                     android:inputType="textMultiLine"
                     />
             </com.google.android.material.textfield.TextInputLayout>

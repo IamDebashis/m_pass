@@ -11,9 +11,18 @@
     <color name="primary">#292D32</color>
     <color name="gray">#DADADA</color>
     <color name="deep_gray">#808080</color>
+    <color name="extra_gray">#424242</color>
     <color name="blue">#105DFB</color>
+    <color name="blue_400">#42A5F5</color>
+    <color name="blue_50">#eef0f2</color>
     <color name="green">#1ED760</color>
     <color name="yellow">#F8981D</color>
     <color name="red">#E30A17</color>
+    <color name="red_400">#ff4c5d</color>
+
+
+    <color name="mpass_blue_50_alpha_060">#99eef0f2</color>
+    <color name="mpass_blue_50_alpha_100">#F0F0F0</color>
+
 
 </resources>

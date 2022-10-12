@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">M Pass</string>
+    <string name="app_name">PocketPass</string>
     <string name="title_home">Home</string>
     <string name="title_analysis">Analysis</string>
     <string name="title_search">Search</string>
@@ -15,11 +15,10 @@
     <string name="autofill">Autofill</string>
     <string name="sync">Sync</string>
 
-
-    <string name="password_to_password_details_transaction">passwordToPasswordDetails_%1$s</string>
-    <string name="password_to_password_details_image_transaction">passwordToPasswordImageDetails_%1$s</string>
+    <string name="password_transition_name">password_%1$s</string>
     <string name="password_details_transaction">passwordToPasswordDetails</string>
-    <string name="password_details_image_transaction">passwordToPasswordDetailsImage</string>
+    <string name="shared_element_transaction">shared_element_container</string>
+    <string name="new_record_shared_transaction">new_record_transaction</string>
 
 
     <array name="category_name">
@@ -42,6 +41,37 @@
     <string name="web_site_app_name">web site / app name</string>
     <string name="add_manually">Add Manually</string>
     <string name="generate_password">Generate Password</string>
+    <string name="close_button">close button</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="continue_text">Continue</string>
+    <string name="profile_sub_des_text"><![CDATA[Add your contact info to get rebalance updates,protfolio insights, reminders & more.]]></string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
+    <string name="user_id">User id</string>
+    <string name="url_hint">https://example.com</string>
+    <string name="link">link</string>
+    <string name="user_id_hint">abc@userid</string>
+    <string name="tick_mark">tick mark</string>
+    <string name="field">Field</string>
+    <string name="select_field">select field</string>
+    <string name="or">OR</string>
+    <string name="write_a_note_hint">write a note</string>
+    <string name="add_new_field">add new field</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

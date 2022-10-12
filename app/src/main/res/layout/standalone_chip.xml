@@ -8,8 +8,11 @@
     android:layout_height="wrap_content"
     tools:text="Education"
     android:padding="10dp"
+    app:chipBackgroundColor="@color/white"
+    android:textColor="@color/chip_strock_color"
     app:checkedIcon="@drawable/ic_tick_circle"
-    app:checkedIconTint="@color/primary"
-    app:chipStrokeColor="@color/primary"
+    android:textAppearance="@style/tvTitle"
+    app:checkedIconTint="@color/blue"
+    app:chipStrokeColor="@color/chip_strock_color"
     app:chipStrokeWidth="1dp"
     app:chipCornerRadius="7dp" />
