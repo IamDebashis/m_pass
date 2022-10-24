@@ -53,16 +53,16 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/iv_profile"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:scaleType="centerCrop"
-                tools:src="@tools:sample/avatars"
+                android:src="@drawable/profile_male"
                 android:layout_gravity="center"
                 />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_name"
                 style="@style/tvHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:text="Debashis Halder" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tv_phone"
                 style="@style/tvSubBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:paddingStart="20dp">
 
                 <ImageView
@@ -118,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:paddingStart="20dp">
 
                 <androidx.appcompat.widget.SwitchCompat
@@ -188,7 +190,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/help_container"
+                android:id="@+id/support_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -205,14 +207,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
-                    android:text="@string/help" />
+                    android:text="@string/support" />
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                >
+                android:layout_marginBottom="20dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -232,7 +234,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
-                        android:text="1.0.0" />
+                        android:text="@string/version_text" />
 
 
                 </LinearLayout>

@@ -1,24 +1,21 @@
 package com.nide.pocketpass.ui.analysis
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnLayout
-import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nide.pocketpass.R
 import com.nide.pocketpass.data.module.Password
+import com.nide.pocketpass.databinding.FilterBottmSheetBinding
 import com.nide.pocketpass.databinding.FragmentAnalysisBinding
-import com.nide.pocketpass.util.password_util.PasswordUtil
 import com.nide.pocketpass.util.collectLatestFlow
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
@@ -33,18 +30,6 @@ class AnalysisFragment : Fragment() {
         SecPasswordAdapter(requireContext()) { password -> navigateToPasswordDetails(password) }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        enterTransition = MaterialFadeThrough().apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,9 +44,6 @@ class AnalysisFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
-        view.doOnLayout { }
         obServeData()
         initClick()
         setupRv()
@@ -78,6 +60,11 @@ class AnalysisFragment : Fragment() {
             val action = AnalysisFragmentDirections.actionNavigationAnalysisToProfileFragment()
             findNavController().navigate(action)
         }
+
+        binding.btnSort.setOnClickListener {
+            showSortBottomSheet()
+        }
+
     }
 
 
@@ -86,14 +73,19 @@ class AnalysisFragment : Fragment() {
     }
 
     private fun obServeData() {
-        collectLatestFlow(viewModel.passwords) {
+        collectLatestFlow(viewModel.sortPassword) {
+            binding.llNoPassword.isVisible = it.isEmpty()
+            binding.rvAnalysis.isVisible = it.isNotEmpty()
             adapter.submitList(it)
         }
 
         collectLatestFlow(viewModel.analysis) { util ->
-            binding.dashboard.tvProgresText.text = "${util.totalSequre}%"
-            binding.dashboard.cpAnalytics.progress = util.totalSequre.toFloat()
-            binding.dashboard.tvSecureText.text = "${util.totalSequre} secure"
+
+            Log.i("TAG", "obServeData:${util.getTotalPassword().toFloat()} , ${util.totalSecure.toFloat()} : ${util.totalWeek} ${util.totalSafe} ${util.totalRisk} ${util.getSecurePass()}")
+            binding.dashboard.cpAnalytics.progressMax = 100.toFloat()
+            binding.dashboard.cpAnalytics.progress = util.getSecurePass().toFloat()
+            binding.dashboard.tvProgresText.text = "${util.getSecurePass()}%"
+            binding.dashboard.tvSecureText.text = "${util.totalSecure} secure"
             binding.dashboard.tvWeekNumber.text = util.totalWeek.toString()
             binding.dashboard.tvSafeNumber.text = util.totalSafe.toString()
             binding.dashboard.tvRiskNumber.text = util.totalRisk.toString()
@@ -101,21 +93,50 @@ class AnalysisFragment : Fragment() {
 
     }
 
-    private suspend fun setAnalysisData(passList: List<Password>) = lifecycleScope.launch {
-        val util = PasswordUtil()
-        val sequre = util.checkSecurePasswords(passList)
-        binding.dashboard.cpAnalytics.progress = sequre.toFloat()
-        binding.dashboard.tvProgresText.text = "$sequre %"
-        binding.dashboard.tvSecureText.text = "$sequre secure"
-        binding.dashboard.tvWeekNumber.text = util.totalWeek.toString()
-        binding.dashboard.tvSafeNumber.text = util.totalSafe.toString()
-        binding.dashboard.tvRiskNumber.text = util.totalRisk.toString()
-    }
 
     private fun navigateToPasswordDetails(password: Password) {
         val action =
             AnalysisFragmentDirections.actionNavigationAnalysisToPasswordDetailsFragment(password.id)
         findNavController().navigate(action)
+    }
+
+    private fun showSortBottomSheet() {
+        val view = FilterBottmSheetBinding.inflate(layoutInflater)
+
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+        bottomSheetDialog.setContentView(view.root)
+
+        view.filterGroup.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.rb_all ->{
+                    viewModel.setFilterRange(0..100)
+                    bottomSheetDialog.dismiss()
+                }
+                R.id.rb_safe ->{
+                    viewModel.setFilterRange(61..100)
+                    bottomSheetDialog.dismiss()
+                }
+                R.id.rb_risk ->{
+                    viewModel.setFilterRange(1..30)
+                    bottomSheetDialog.dismiss()
+                }
+                R.id.rb_week ->{
+                    viewModel.setFilterRange(31..60)
+                    bottomSheetDialog.dismiss()
+                }
+            }
+        }
+
+        collectLatestFlow(viewModel.filterBy){ range->
+            when(range){
+                0..100 -> view.rbAll.isChecked = true
+                1..30 -> view.rbRisk.isChecked = true
+                31..60 -> view.rbWeek.isChecked = true
+                61..100 -> view.rbSafe.isChecked = true
+            }
+        }
+
+        bottomSheetDialog.show()
     }
 
 

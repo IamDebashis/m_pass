@@ -60,12 +60,12 @@
             android:id="@+id/ll_child_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
             <include
                 android:id="@+id/dashboard"
-                layout="@layout/layout_security"
-                 />
+                layout="@layout/layout_security" />
 
             <LinearLayout
                 android:id="@+id/ll_sub_header"
@@ -76,7 +76,7 @@
 
                 <TextView
                     android:id="@+id/tv_title_Analysis"
-                    style="@style/tvSubHeader"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -94,10 +94,10 @@
                         android:id="@+id/btn_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_gravity="end"
                         android:layout_marginEnd="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
                         android:src="@drawable/ic_sort" />
 
                 </FrameLayout>
@@ -108,11 +108,39 @@
                 android:id="@+id/rv_analysis"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
                 android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_sec_password"
-                />
+                tools:listitem="@layout/item_sec_password" />
+
+            <LinearLayout
+                android:id="@+id/ll_no_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/tv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_undraw_empty" />
+
+                <TextView
+                    android:id="@+id/tv_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:text="No Password"
+                    android:textAppearance="?attr/textAppearanceOverline" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

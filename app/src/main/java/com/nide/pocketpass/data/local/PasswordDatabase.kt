@@ -11,14 +11,20 @@ import com.nide.pocketpass.R
 import com.nide.pocketpass.data.ConverterFactory
 import com.nide.pocketpass.data.local.dao.CategoryDao
 import com.nide.pocketpass.data.local.dao.PasswordDao
+import com.nide.pocketpass.data.local.util.LocalDataStore
+import com.nide.pocketpass.data.local.util.userDataStore
 import com.nide.pocketpass.data.module.Category
 import com.nide.pocketpass.data.module.CompanyIcon
 import com.nide.pocketpass.data.module.Password
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-@Database(entities = [Password::class, Category::class,CompanyIcon::class], version = 2, exportSchema = false)
+@Database(entities = [Password::class, Category::class], version = 3, exportSchema = false)
 @TypeConverters(ConverterFactory::class)
 abstract class PasswordDatabase : RoomDatabase() {
 

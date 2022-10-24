@@ -1,10 +1,12 @@
 package com.nide.pocketpass.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,18 +35,6 @@ class HomeFragment : Fragment(), PasswordAdapter.PasswordAdapterListener {
 
     private lateinit var itemSectionDecoration: ItemSectionDecoration
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough().apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-
-    }
 
 
     override fun onCreateView(
@@ -78,7 +68,9 @@ class HomeFragment : Fragment(), PasswordAdapter.PasswordAdapterListener {
     }
 
     private fun initRV() {
-        itemSectionDecoration = ItemSectionDecoration(requireContext()) { adapter.currentList }
+        itemSectionDecoration = ItemSectionDecoration(requireContext()) {
+            Log.i(TAG, "initRV: ${adapter.currentList.size}")
+            adapter.currentList }
         binding.rvPassword.apply {
             adapter = this@HomeFragment.adapter
             addItemDecoration(itemSectionDecoration)
@@ -95,6 +87,8 @@ class HomeFragment : Fragment(), PasswordAdapter.PasswordAdapterListener {
                     list.sortedBy { it.categoryId }
                 }
                 .collectLatest {
+                    binding.llNoPassword.isVisible = it.isEmpty()
+                    binding.rvPassword.isVisible = it.isNotEmpty()
                     adapter.submitList(it)
                 }
         }

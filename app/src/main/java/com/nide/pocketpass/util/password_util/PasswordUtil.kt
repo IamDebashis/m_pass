@@ -1,17 +1,34 @@
 package com.nide.pocketpass.util.password_util
 
+import android.util.Log
 import com.nide.pocketpass.data.module.Password
 import com.nide.pocketpass.util.AESEncryption.decrypt
 
 class PasswordUtil {
     var totalWeek: Int = 0
+        get
         private set
     var totalSafe: Int = 0
+        get
         private set
     var totalRisk: Int = 0
+        get
         private set
 
-    var totalSequre: Int = 0
+    var totalSecure: Int = 0
+
+    fun getTotalPassword() = totalWeek + totalSafe + totalRisk
+
+
+
+    fun getSecurePass(): Int {
+        return try {
+          val percent =  ( totalSecure.toFloat() / getTotalPassword()) * 100
+            percent.toInt()
+        } catch (e: ArithmeticException) {
+            0
+        }
+    }
 
     fun checkSecurePasswords(passwordList: List<Password>): Int {
 
@@ -26,8 +43,8 @@ class PasswordUtil {
                 in 61..100 -> totalSafe++
             }
         }
-        totalSequre = totalWeek + totalSafe
-        return totalSequre
+        totalSecure = totalWeek + totalSafe
+        return totalSecure
     }
 
 

@@ -22,6 +22,10 @@ interface PasswordDao {
     @Query("DELETE FROM $PASSWORD_TABLE")
     suspend fun deleteAllPassword()
 
+    @Query("DELETE FROM $PASSWORD_TABLE WHERE id = :id")
+    suspend fun deltePaawordById(id: Int)
+
+
     @Query("SELECT * FROM $PASSWORD_TABLE")
     fun getAllPassword(): Flow<List<Password>>
 

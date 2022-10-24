@@ -4,6 +4,7 @@
     package="com.nide.pocketpass">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.nide.pocketpass.MyApplication"
@@ -17,22 +18,33 @@
         android:theme="@style/Theme.MPass.DayNight"
         tools:targetApi="31">
 
+
         <activity
-            android:name=".ui.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:name=".ui.start.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".ui.start.login.LogInActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
 
         <service
             android:name=".services.PasswordAutofillService"
             android:exported="false"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE">
-
             <intent-filter>
                 <action android:name="android.service.autofill.AutofillService" />
             </intent-filter>

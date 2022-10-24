@@ -46,4 +46,9 @@ class PasswordUseCaseModule {
         return GetAllPasswordsWithCategory(repository)
     }
 
+    @Provides
+    fun providesDeletePasswordById(repository: PasswordRepository) : DeletePasswordByIdUseCase{
+        return DeletePasswordByIdUseCase(repository)
+    }
+
 }

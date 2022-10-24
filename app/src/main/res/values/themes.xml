@@ -19,8 +19,9 @@
 
         <!--<item name="android:colorBackground">@color/blue_50</item>-->
         <item name="colorSurface">@color/white</item>
-        <item name="colorPrimarySurfaceVariant">?attr/colorPrimaryVariant</item>
+<!--        <item name="colorPrimarySurfaceVariant">?attr/colorPrimaryVariant</item>-->
         <item name="colorError">@color/red_400</item>
+
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/mpass_blue_50_alpha_060</item>
@@ -32,20 +33,21 @@
         <item name="android:windowActivityTransitions">true</item>
 
         <!--Typography-->
-        <item name="textAppearanceHeadline2">@style/TextAppearance.Mpass.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.Mpass.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.Mpass.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Mpass.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Mpass.Headline6</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.Mpass.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.Mpass.Body2</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.Mpass.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.Mpass.Subtitle2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Mpass.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.Mpass.Overline</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Mpass.Button</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.PocketPass.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.PocketPass.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.PocketPass.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.PocketPass.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.PocketPass.Headline6</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.PocketPass.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.PocketPass.Body2</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.PocketPass.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.PocketPass.Subtitle2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.PocketPass.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.PocketPass.Overline</item>
+        <item name="textAppearanceButton">@style/TextAppearance.PocketPass.Button</item>
 
         <item name="android:windowBackground">?android:colorBackground</item>
+        <item name="android:windowIsTranslucent">true</item>
 
     </style>
 
@@ -113,6 +115,9 @@
     <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+
+
 
 
 </resources>

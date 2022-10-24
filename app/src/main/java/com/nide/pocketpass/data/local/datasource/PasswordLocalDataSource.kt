@@ -5,6 +5,7 @@ import com.nide.pocketpass.data.module.Password
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PasswordLocalDataSource(private val passwordDao: PasswordDao) {
 
@@ -29,6 +30,10 @@ class PasswordLocalDataSource(private val passwordDao: PasswordDao) {
 
     fun deleteAllPasswords() = CoroutineScope(Dispatchers.IO).launch {
         passwordDao.deleteAllPassword()
+    }
+
+    fun deltePasswordById(id: Int) = CoroutineScope(Dispatchers.IO).launch {
+        passwordDao.deltePaawordById(id)
     }
 
     fun getPasswordsByCategory(categoryId: Int) = passwordDao.getPasswordByCategory(categoryId)

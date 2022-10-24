@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PocketPass</string>
+    <string name="app_title">Pocket Pass</string>
     <string name="title_home">Home</string>
     <string name="title_analysis">Analysis</string>
     <string name="title_search">Search</string>
@@ -11,7 +12,7 @@
     <string name="permission">Permission</string>
     <string name="about">About</string>
     <string name="feedback">Feedback</string>
-    <string name="help">Help</string>
+    <string name="support">Support</string>
     <string name="autofill">Autofill</string>
     <string name="sync">Sync</string>
 
@@ -36,15 +37,15 @@
 
     </array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_text"><![CDATA[Pocket Pass is free and open source Android App. It is a highly secure app. It does not store your data in any where , it store only locally on your phone. It encrypt your password and then store to your device . It uses a very strong 64 bit encryption to encrypt your password. ]]></string>
     <string name="edit_profile">Edit Profile</string>
     <string name="web_site_app_name">web site / app name</string>
     <string name="add_manually">Add Manually</string>
     <string name="generate_password">Generate Password</string>
     <string name="close_button">close button</string>
     <string name="dismiss">Dismiss</string>
-    <string name="continue_text">Continue</string>
-    <string name="profile_sub_des_text"><![CDATA[Add your contact info to get rebalance updates,protfolio insights, reminders & more.]]></string>
+    <string name="update_text">Update</string>
+    <string name="profile_sub_des_text"><![CDATA[Add contact details to get new updates. And state up to date with new things.]]></string>
     <string name="save">Save</string>
     <string name="name">Name</string>
     <string name="user_id">User id</string>
@@ -73,5 +74,22 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="phone">Phone</string>
+    <string name="email">email</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="not_found">Not Found! try another</string>
+    <string name="secure_text">%1$ secure</string>
+    <string name="country_code">%1$s</string>
+    <string name="version_text">v1.0.0</string>
+    <string name="license_text"><![CDATA[Attributions & License]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="github_link"><a href="https://github.com/IamDebashis/pocketpass">https://github.com/IamDebashis/pocketpass</a></string>
+    <string name="github_profile">https://github.com/IamDebashis</string>
+    <string name="linkedin_profile">https://www.linkedin.com/in/coder-debashis/</string>
+    <string name="twitter_profile">https://twitter.com/debahalder9914</string>
 
 </resources>

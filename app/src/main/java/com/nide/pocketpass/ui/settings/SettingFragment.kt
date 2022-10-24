@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import android.view.autofill.AutofillManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.nide.pocketpass.R
 import com.nide.pocketpass.databinding.FragmentSettingBinding
+import com.nide.pocketpass.util.collectLatestFlow
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.annotations.Contract
 
@@ -27,7 +29,7 @@ class SettingFragment : Fragment() {
 
     private var _binding: FragmentSettingBinding? = null
     val binding get() = _binding!!
-    private lateinit var viewModel: SettingViewModel
+    private val viewModel : SettingViewModel by viewModels()
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -72,6 +74,14 @@ class SettingFragment : Fragment() {
     private fun initViews() = binding.apply {
         val afm = requireContext().getSystemService(AutofillManager::class.java)
         switchAutofill.isChecked = afm.hasEnabledAutofillServices()
+
+        collectLatestFlow(viewModel.userName){
+            tvName.text = it
+        }
+        collectLatestFlow(viewModel.userPhone){
+            tvPhone.text = it
+        }
+
     }
 
     private fun initClick() = binding.apply {
@@ -83,6 +93,14 @@ class SettingFragment : Fragment() {
         btnEditProfile.setOnClickListener {
             val action = SettingFragmentDirections.actionNavigationSettingsToProfileFragment()
             findNavController().navigate(action)
+        }
+
+        aboutContainer.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_settings_to_aboutFragment)
+        }
+
+        supportContainer.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_settings_to_supportFragment)
         }
 
         switchAutofill.setOnClickListener {

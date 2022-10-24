@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -16,8 +17,12 @@ import com.nide.pocketpass.ui.home.SectionHeaderView
 
 class ItemSectionDecoration(
     private val context: Context,
-    private val getItemList: () -> MutableList<PasswordTuple>
+    private var getItemList: () -> List<PasswordTuple>
 ) : RecyclerView.ItemDecoration() {
+
+    fun setItemList(list: List<PasswordTuple>) {
+        getItemList = { list }
+    }
 
 
     private val sectionHeight by lazy {
@@ -52,7 +57,10 @@ class ItemSectionDecoration(
         }
         val position = parent.getChildAdapterPosition(view)
 
-        if (position == 0) {
+
+        if(position < 0 || position > (getItemList().size-1)){
+            return
+        } else if (position == 0) {
             outRect.top = sectionHeight
             return
         }
@@ -65,34 +73,34 @@ class ItemSectionDecoration(
         }
     }
 
-  /*  override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
+    /*  override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+          super.onDrawOver(c, parent, state)
 
-        val item = getItemList()
-        if (item.isEmpty()) {
-            return
-        }
+          val item = getItemList()
+          if (item.isEmpty()) {
+              return
+          }
 
-        val childCount = parent.childCount
-        if (childCount == 0) {
-            return
-        }
+          val childCount = parent.childCount
+          if (childCount == 0) {
+              return
+          }
 
-        val firstView = parent.getChildAt(0)
-        val position = parent.getChildAdapterPosition(firstView)
-        val password = item[position]
+          val firstView = parent.getChildAt(0)
+          val position = parent.getChildAdapterPosition(firstView)
+          val password = item[position]
 
-        val condition = password.categoryId != item[position + 1].categoryId
-        drawSectionView(
-            c, password.categoryName, if (firstView.bottom <= sectionHeight && condition) {
-                firstView.bottom - sectionHeight
-            } else {
-                0
-            }
-        )
+          val condition = password.categoryId != item[position + 1].categoryId
+          drawSectionView(
+              c, password.categoryName, if (firstView.bottom <= sectionHeight && condition) {
+                  firstView.bottom - sectionHeight
+              } else {
+                  0
+              }
+          )
 
 
-    }*/
+      }*/
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
@@ -100,8 +108,10 @@ class ItemSectionDecoration(
         for (i in 0 until childCount) {
             val childView = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(childView)
-            val item = getItemList()[position]
+            if (position < 0 || position > childCount - 1)
+                return
 
+            val item = getItemList()[position]
             if (getItemList().isNotEmpty() &&
                 (position == 0 || item.categoryId != getItemList()[position - 1].categoryId)
             ) {

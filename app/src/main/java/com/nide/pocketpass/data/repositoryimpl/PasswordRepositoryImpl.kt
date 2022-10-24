@@ -44,4 +44,8 @@ class PasswordRepositoryImpl(private val passwordLocalDataSource: PasswordLocalD
     override fun getAlPasswordsWithCategory(): Flow<List<PasswordTuple>> {
        return passwordLocalDataSource.getAllPasswordWithCategory()
     }
+
+    override fun deletePasswordById(id: Int) {
+        passwordLocalDataSource.deltePasswordById(id)
+    }
 }

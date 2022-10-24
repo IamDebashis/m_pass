@@ -48,15 +48,6 @@ class PasswordAutofillService : AutofillService() {
         
     }
 
-    override fun onConnected() {
-        super.onConnected()
-        Log.i(TAG, "onConnected: ")
-    }
-
-    override fun onDisconnected() {
-        super.onDisconnected()
-        Log.i(TAG, "onDisconnected: ")
-    } 
 
 
 }

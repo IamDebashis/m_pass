@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navigation"
+    app:startDestination="@id/loginOrRegisterFragment">
+
+    <fragment
+        android:id="@+id/loginOrRegisterFragment"
+        android:name="com.nide.pocketpass.ui.start.login.LoginOrRegisterFragment"
+        android:label="fragment_login_or_register"
+        tools:layout="@layout/fragment_login_or_register" >
+        <action
+            android:id="@+id/action_loginOrRegisterFragment_to_OTPVerificationFragment"
+            app:destination="@id/OTPVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OTPVerificationFragment"
+        android:name="com.nide.pocketpass.ui.start.login.OTPVerificationFragment"
+        android:label="OTPVerificationFragment" >
+        <argument
+            android:name="mobile"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -67,20 +67,18 @@ class SecPasswordAdapter(val context: Context, private val onItemClick: (Passwor
                 .error(password.icon)
                 .into(binding.ivIcon)
 
-            MainScope().launch {
-                val strength = async { loadPasswordStrength(password) }
-                binding.progressBar.setProgressWithColor(strength.await().strength)
-                binding.tvStrength.text = strength.await().mapStrength()
-            }
+                binding.progressBar.setProgressWithColor(password.strength)
+                binding.tvStrength.text = PasswordStrength.mapStrength(password.strength)
+
 
         }
 
-        private suspend fun loadPasswordStrength(password: Password) = withContext(Dispatchers.IO) {
+    /*    private suspend fun loadPasswordStrength(password: Password) = withContext(Dispatchers.IO) {
             val decryptPassword = password.password?.decrypt()
             val strength = PasswordStrength(decryptPassword ?: "")
             strength.check()
             strength
-        }
+        }*/
     }
 
 

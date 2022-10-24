@@ -22,6 +22,7 @@ import com.nide.pocketpass.util.*
 import com.nide.pocketpass.util.password_util.PasswordBuilder
 import com.nide.pocketpass.util.AESEncryption.decrypt
 import com.nide.pocketpass.util.AESEncryption.encrypt
+import com.nide.pocketpass.util.password_util.PasswordStrength
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -40,14 +41,14 @@ class UpdateFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+    /*    enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
             duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
         }
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
             duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
         }
 
-
+*/
     }
 
 
@@ -139,6 +140,7 @@ class UpdateFragment : Fragment() {
                         }
                     }
                     val enPass = password.encrypt()
+                    val strength = PasswordStrength(password).check()
                     if (enPass != null) {
                         viewModel.updatePassword(
                             Password(
@@ -147,6 +149,7 @@ class UpdateFragment : Fragment() {
                                 userId = username,
                                 password = enPass,
                                 url = url,
+                                strength = strength,
                                 categoryId = fieldId?.id,
                                 notes = note,
                                 icon = icon

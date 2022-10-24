@@ -13,6 +13,28 @@ class PasswordStrength(private val password: CharSequence) {
         private set
 
 
+    companion object{
+        fun mapStrength(s: Int): String {
+            return when (s) {
+                in 1..30 -> "Risk"
+                in 31..60 -> "Week"
+                in 61..100 -> "Safe"
+                else -> ""
+            }
+        }
+
+
+    }
+
+    fun mapStrength(): String {
+        return when (strength) {
+            in 1..30 -> "Risk"
+            in 31..60 -> "Week"
+            in 61..100 -> "Safe"
+            else -> ""
+        }
+    }
+
     init {
         lowerCase = password.hasLowerCase()
         upperCase = password.hasUpperCase()
@@ -27,12 +49,12 @@ class PasswordStrength(private val password: CharSequence) {
             } else {
                 10
             }
-            in 5..9 -> if (lowerCase && upperCase && digit && specialChar) {
+            in 5..8 -> if (lowerCase && upperCase && digit && specialChar) {
                 55
             } else {
                 25
             }
-            in 10..14 -> if (lowerCase && upperCase && digit && specialChar) {
+            in 9..14 -> if (lowerCase && upperCase && digit && specialChar) {
                 65
             } else {
                 35
@@ -54,14 +76,7 @@ class PasswordStrength(private val password: CharSequence) {
         return strength
     }
 
-    fun mapStrength(): String {
-        return when (strength) {
-            in 1..30 -> "Risk"
-            in 31..60 -> "Week"
-            in 61..100 -> "Safe"
-            else -> ""
-        }
-    }
+
 
     private fun CharSequence.hasUpperCase(): Boolean {
         val pattern = Pattern.compile("[A-Z]")

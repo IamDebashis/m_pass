@@ -19,6 +19,7 @@ import com.nide.pocketpass.databinding.FragmentNewRecordBinding
 import com.nide.pocketpass.util.password_util.PasswordBuilder
 import com.nide.pocketpass.util.*
 import com.nide.pocketpass.util.AESEncryption.encrypt
+import com.nide.pocketpass.util.password_util.PasswordStrength
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -38,18 +39,7 @@ class NewRecordFragment : Fragment() {
         _binding = null
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -124,6 +114,7 @@ class NewRecordFragment : Fragment() {
 
                 if (password.isNotEmpty()) {
                     val enPass = password.encrypt()
+                    val strength = PasswordStrength(password).check()
                     if (enPass != null) {
                         val icon = AvaterCreator.AvatarBuilder(requireContext())
                             .setAvatarSize(200)
@@ -140,6 +131,7 @@ class NewRecordFragment : Fragment() {
                                 url = url,
                                 categoryId = fieldId?.id,
                                 notes = note,
+                                strength = strength,
                                 icon = icon,
                                 createTime = TimeFormat.getLocalTimeTimestamp()
                             )

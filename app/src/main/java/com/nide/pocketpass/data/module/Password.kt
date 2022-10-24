@@ -25,6 +25,7 @@ data class Password(
     @ColumnInfo(name = "url") val url: String?,
     @ColumnInfo(name = "password") val password: String?,
     @ColumnInfo(name = "notes") val notes: String?,
+    @ColumnInfo(name = "password_strength") var strength : Int =0,
     @ColumnInfo(name = "category_id") val categoryId: Int?,
     @ColumnInfo(name = "create_time") val createTime: Long = 0L,
     @ColumnInfo(name = "company_icon") val icon: Bitmap

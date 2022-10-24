@@ -4,6 +4,11 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -17,6 +22,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 private var inputMethodManager: InputMethodManager? = null
 fun View.show() {
@@ -91,4 +97,29 @@ fun <T> Fragment.collectLatestFlow(myFlow: Flow<T>, collect: suspend (T) -> Unit
             }
         }
     }
+}
+
+
+fun isNetworkAvailable(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val cap = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        return cap.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val networks: Array<Network> = cm.allNetworks
+        for (n in networks) {
+            val nInfo: NetworkInfo? = cm.getNetworkInfo(n)
+            if (nInfo != null && nInfo.isConnected) return true
+        }
+    } else {
+        val networks = cm.allNetworkInfo
+        for (nInfo in networks) {
+            if (nInfo != null && nInfo.isConnected) return true
+        }
+    }
+
+    return false
+
+
 }

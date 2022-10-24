@@ -50,40 +50,32 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-<!--    <androidx.core.widget.NestedScrollView
-        android:id="@+id/view_container"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_password"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:paddingBottomSystemWindowInsets="true"
+        app:paddingTopSystemWindowInsets="true"
+        tools:listitem="@layout/item_password" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.home.HomeFragment">-->
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:scrollbars="vertical"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:paddingBottomSystemWindowInsets="true"
-                app:paddingTopSystemWindowInsets="true"
-                tools:listitem="@layout/item_password" />
-
-        <!--    <LinearLayout
+        <LinearLayout
                 android:id="@+id/ll_no_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="100dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,20 +89,20 @@
 
                 <TextView
                     android:id="@+id/tv_details"
-                    style="@style/tvHeaderGay"
+                    android:textAppearance="?attr/textAppearanceOverline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
                     android:text="No save password yet" />
+            <TextView
+                android:id="@+id/tv_addPass"
+                style="@style/tvHeaderGay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="add password by click '+'" />
             </LinearLayout>
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    </androidx.core.widget.NestedScrollView>
--->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

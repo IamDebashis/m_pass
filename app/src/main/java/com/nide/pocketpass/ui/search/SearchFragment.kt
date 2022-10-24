@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,13 +40,13 @@ class SearchFragment : Fragment(),PasswordAdapter.PasswordAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+     /*   enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
             duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
         }
 
         reenterTransition = MaterialElevationScale(true).apply {
             duration = resources.getInteger(R.integer.mpass_motion_duration_large).toLong()
-        }
+        }*/
 
     }
 
@@ -113,6 +114,8 @@ class SearchFragment : Fragment(),PasswordAdapter.PasswordAdapterListener {
             }
             launch {
                 viewModel.filterPassword.collectLatest {
+                    binding.layoutNotFound.isVisible = it.isEmpty()
+                    binding.rvResult.isVisible = it.isNotEmpty()
                     adapter.submitList(it)
                 }
             }

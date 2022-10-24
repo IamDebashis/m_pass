@@ -23,6 +23,11 @@
 
     <color name="mpass_blue_50_alpha_060">#99eef0f2</color>
     <color name="mpass_blue_50_alpha_100">#F0F0F0</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 
 
 </resources>

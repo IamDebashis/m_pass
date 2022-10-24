@@ -12,9 +12,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="8dp"
-
         app:cpb_background_progressbar_width="20dp"
-        app:cpb_progress="50"
         app:cpb_progressbar_width="15dp"
         app:cpb_round_border="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,11 +32,11 @@
 
     <TextView
         android:id="@+id/tv_secure_text"
-        style="@style/tvBody"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="82% secure"
+        android:text="@string/secure_text"
         app:layout_constraintEnd_toEndOf="@+id/cp_analytics"
         app:layout_constraintStart_toStartOf="@+id/cp_analytics"
         app:layout_constraintTop_toBottomOf="@+id/cp_analytics" />

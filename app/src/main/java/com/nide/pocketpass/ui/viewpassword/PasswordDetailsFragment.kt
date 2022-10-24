@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -13,8 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.transition.MaterialSharedAxis
 import com.nide.pocketpass.R
+import com.nide.pocketpass.databinding.DeleteDialougeLayoutBinding
+import com.nide.pocketpass.databinding.FilterBottmSheetBinding
 import com.nide.pocketpass.databinding.FragmentPasswordDetailsBinding
 import com.nide.pocketpass.util.password_util.PasswordStrength
 import com.nide.pocketpass.util.*
@@ -41,9 +45,6 @@ class PasswordDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
-            duration = resources.getInteger(R.integer.mpass_motion_duration_medium).toLong()
-        }
     }
 
     override fun onCreateView(
@@ -74,7 +75,28 @@ class PasswordDetailsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.btnTrash.setOnClickListener {
+            showDeleteBottomSheet()
+        }
+
+
     }
+
+    private fun showDeleteBottomSheet() {
+        val view = DeleteDialougeLayoutBinding.inflate(layoutInflater)
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+        bottomSheetDialog.setContentView(view.root)
+        view.btnNegative.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        view.btnPosetive.setOnClickListener {
+            findNavController().navigateUp()
+          viewModel.deletePassword(args.passwordId)
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.show()
+    }
+
     private fun observeData(){
 
         lifecycleScope.launchWhenStarted {
