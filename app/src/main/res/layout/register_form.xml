@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/textView7"
@@ -15,7 +16,6 @@
         android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/et_name"
@@ -68,10 +68,9 @@
                 android:id="@+id/country_code_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:ccp_showFlag="false"
-                app:ccp_showNameCode="false"
                 android:layout_gravity="center"
-                />
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false" />
         </FrameLayout>
 
         <EditText
@@ -85,6 +84,21 @@
             android:inputType="phone"
             android:padding="@dimen/edit_text_padding"
             android:textColor="@color/extra_gray" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_termCondition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="@string/term_condition"
+        android:textAppearance="?attr/textAppearanceCaption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

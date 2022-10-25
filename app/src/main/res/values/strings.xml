@@ -91,5 +91,6 @@
     <string name="github_profile">https://github.com/IamDebashis</string>
     <string name="linkedin_profile">https://www.linkedin.com/in/coder-debashis/</string>
     <string name="twitter_profile">https://twitter.com/debahalder9914</string>
+    <string name="term_condition">By registering, you agree to PocketPass\'s <a href="https://pages.flycricket.io/pocket-pass/privacy.html">Privacy Policy</a> and <a href="https://pages.flycricket.io/pocket-pass-0/terms.html">Terms of Service</a> </string>
 
 </resources>

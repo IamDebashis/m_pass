@@ -20,7 +20,7 @@ android {
         applicationId "com.nide.pocketpass"
         minSdk 26
         targetSdk 32
-        versionCode 3
+        versionCode 4
         versionName "1.0.0"
         buildConfigField "String", "SECRET_KEY", keyProperties['SECRET_KEY']
         buildConfigField "String", "SALT_KEY", keyProperties['SALT_KEY']
