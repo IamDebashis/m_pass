@@ -152,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:background="?attr/selectableItemBackground"
                 android:paddingStart="20dp">
 
                 <ImageView
@@ -172,6 +173,7 @@
                 android:id="@+id/feedback_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
                 android:padding="10dp"
                 android:paddingStart="20dp">
 
@@ -193,6 +195,7 @@
                 android:id="@+id/support_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
                 android:padding="10dp"
                 android:paddingStart="20dp">
 
@@ -217,26 +220,40 @@
                 android:layout_marginBottom="20dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/tvSubHeader"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Version" />
+                        android:layout_gravity="center">
+
+                        <TextView
+                            style="@style/tvSubHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Version" />
+
+                        <TextView
+                            style="@style/tvCaption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/version_text" />
+
+
+                    </LinearLayout>
 
                     <TextView
-                        style="@style/tvCaption"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView15"
+                        android:textAppearance="?attr/textAppearanceCaption"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/version_text" />
-
-
+                        android:gravity="center"
+                        android:text="@string/made_in_india" />
                 </LinearLayout>
 
 

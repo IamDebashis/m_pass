@@ -9,7 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +30,7 @@ import com.nide.pocketpass.data.remote.util.DatabaseConstant
 import com.nide.pocketpass.databinding.FragmentLoginOrRegisterBinding
 import com.nide.pocketpass.util.validName
 import com.nide.pocketpass.util.validPhone
+import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
 class LoginOrRegisterFragment : Fragment() {
@@ -33,6 +40,8 @@ class LoginOrRegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private var db: FirebaseFirestore = Firebase.firestore
+
+    private val viewModel: LoginViewModel by viewModels()
 
     companion object {
         var verificationId = ""
@@ -94,8 +103,6 @@ class LoginOrRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
-        FirebaseAuth.getInstance().firebaseAuthSettings.forceRecaptchaFlowForTesting(true)
-
         initView()
         initClick()
     }
@@ -133,12 +140,34 @@ class LoginOrRegisterFragment : Fragment() {
 
     private fun initClick() = binding.apply {
         btnVerification.setOnClickListener {
-
+            pbLoading.isVisible = true
             if (isLogin) {
                 if (inLogin.loginEtMobileNumber.validPhone()) {
-                    val code = inLogin.loginCountryCodePicker.selectedCountryCodeWithPlus
+                    countryCode = inLogin.loginCountryCodePicker.selectedCountryCodeWithPlus
                     phone = inLogin.loginEtMobileNumber.text.toString()
-                    checkUserExist(code , phone)
+
+                    viewModel.checkUserExist(phone, { exist ->
+                        pbLoading.isVisible = false
+                        if (exist) {
+                            viewModel.sendOtp(countryCode + phone, mCallback, requireActivity())
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "user not found , register first",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }, {
+                        Log.i(TAG, "initClick: $it")
+                        pbLoading.isVisible = false
+                        Toast.makeText(
+                            context,
+                            "something went go wrong ! please try again .",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
+
+//                    checkUserExist(code, phone)
 
                 }
 
@@ -148,16 +177,36 @@ class LoginOrRegisterFragment : Fragment() {
                     countryCode = inRegister.countryCodePicker.selectedCountryCodeWithPlus
                     phone = inRegister.etMobileNumber.text.toString()
                     val mobileNumber = countryCode + phone
-                    sendOtp(mobileNumber)
+
+                    viewModel.checkUserExist(phone, { exist ->
+                        pbLoading.isVisible = false
+                        if (exist) {
+                            Toast.makeText(
+                                context,
+                                "number already used ! please choose another number",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            viewModel.sendOtp(mobileNumber, mCallback, requireActivity())
+                        }
+                    }, {
+                        Log.i(TAG, "initClick: $it")
+                        pbLoading.isVisible = false
+                        Toast.makeText(
+                            context,
+                            "something went go wrong ! please try again .",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
+
 
                 }
-
-
             }
         }
 
 
     }
+
 
     private fun sendOtp(phone: String) {
         val option = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -175,7 +224,7 @@ class LoginOrRegisterFragment : Fragment() {
             .get()
             .addOnSuccessListener { user ->
                 if (!user.isEmpty) {
-                    sendOtp(code+mobile)
+                    sendOtp(code + mobile)
                 } else {
                     Toast.makeText(
                         context,
@@ -185,6 +234,7 @@ class LoginOrRegisterFragment : Fragment() {
                 }
 
             }.addOnFailureListener {
+                Log.w(TAG, "checkUserExist: ${it.message} : $it")
                 Toast.makeText(context, "something went go wrong !", Toast.LENGTH_SHORT).show()
             }
     }

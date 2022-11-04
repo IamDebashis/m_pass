@@ -1,11 +1,10 @@
 package com.nide.pocketpass.ui.settings
 
-import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.nide.pocketpass.R
 import com.nide.pocketpass.databinding.FragmentSettingBinding
 import com.nide.pocketpass.util.collectLatestFlow
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.annotations.Contract
 
 
 @AndroidEntryPoint
@@ -29,7 +27,7 @@ class SettingFragment : Fragment() {
 
     private var _binding: FragmentSettingBinding? = null
     val binding get() = _binding!!
-    private val viewModel : SettingViewModel by viewModels()
+    private val viewModel: SettingViewModel by viewModels()
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -75,10 +73,10 @@ class SettingFragment : Fragment() {
         val afm = requireContext().getSystemService(AutofillManager::class.java)
         switchAutofill.isChecked = afm.hasEnabledAutofillServices()
 
-        collectLatestFlow(viewModel.userName){
+        collectLatestFlow(viewModel.userName) {
             tvName.text = it
         }
-        collectLatestFlow(viewModel.userPhone){
+        collectLatestFlow(viewModel.userPhone) {
             tvPhone.text = it
         }
 
@@ -101,6 +99,24 @@ class SettingFragment : Fragment() {
 
         supportContainer.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_settings_to_supportFragment)
+        }
+        feedbackContainer.setOnClickListener {
+            val appPackageName = "com.nide.pocketpass"
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+            } catch (anfe: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
         }
 
         switchAutofill.setOnClickListener {

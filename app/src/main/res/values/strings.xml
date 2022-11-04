@@ -83,7 +83,7 @@
     <string name="not_found">Not Found! try another</string>
     <string name="secure_text">%1$ secure</string>
     <string name="country_code">%1$s</string>
-    <string name="version_text">v1.0.0</string>
+    <string name="version_text">v1.0.2</string>
     <string name="license_text"><![CDATA[Attributions & License]]></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -92,5 +92,13 @@
     <string name="linkedin_profile">https://www.linkedin.com/in/coder-debashis/</string>
     <string name="twitter_profile">https://twitter.com/debahalder9914</string>
     <string name="term_condition">By registering, you agree to PocketPass\'s <a href="https://pages.flycricket.io/pocket-pass/privacy.html">Privacy Policy</a> and <a href="https://pages.flycricket.io/pocket-pass-0/terms.html">Terms of Service</a> </string>
+    <string name="otp_resend_text">after %1$d sec</string>
+    <string name="phone_details_text">We have send an One Time Password in this number  %1$s.</string>
+    <string name="made_in_india">Made with ❤ in India</string>
+    <string name="back_alert_title">Change Number</string>
+    <string name="supporting_text">Are you want to change the number ?</string>
+    <string name="exit_app">Exit App</string>
+    <string name="decline">no</string>
+    <string name="accept">Yes</string>
 
 </resources>

@@ -80,6 +80,7 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_background"
             android:ems="10"
+            android:maxLength="10"
             android:hint="987654321"
             android:inputType="phone"
             android:padding="@dimen/edit_text_padding"

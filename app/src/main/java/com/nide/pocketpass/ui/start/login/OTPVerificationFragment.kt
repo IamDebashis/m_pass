@@ -7,16 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.nide.pocketpass.R
 import com.nide.pocketpass.data.local.util.LocalDataStore
 import com.nide.pocketpass.data.local.util.userDataStore
 import com.nide.pocketpass.data.module.User
@@ -29,6 +36,7 @@ import com.nide.pocketpass.ui.start.login.LoginOrRegisterFragment.Companion.phon
 import com.nide.pocketpass.ui.start.login.LoginOrRegisterFragment.Companion.userName
 import com.nide.pocketpass.ui.start.login.LoginOrRegisterFragment.Companion.verificationCode
 import com.nide.pocketpass.ui.start.login.LoginOrRegisterFragment.Companion.verificationId
+import com.nide.pocketpass.util.collectLatestFlow
 import com.nide.pocketpass.util.showSoftKeyboard
 import kotlinx.coroutines.*
 
@@ -39,6 +47,54 @@ class OTPVerificationFragment : Fragment() {
     private val binding get() = _binding!!
     private val auth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
+
+    private val viewModel: LoginViewModel by viewModels()
+
+
+    private val onBackCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setTitle(resources.getString(R.string.back_alert_title))
+                setMessage(resources.getString(R.string.supporting_text))
+                setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                    // Respond to negative button press
+                    dialog.dismiss()
+
+                }
+                setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                    // Respond to positive button press
+                    findNavController().navigateUp()
+                }
+            }.show()
+        }
+    }
+
+
+    private var mCallback: PhoneAuthProvider.OnVerificationStateChangedCallbacks =
+        object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+            override fun onVerificationCompleted(authCredential: PhoneAuthCredential) {
+                binding.etOtp.setText(authCredential.smsCode ?: "")
+                Log.i(TAG, "onVerificationCompleted: ${authCredential.smsCode}")
+
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                Log.i(TAG, "onVerificationFailed: ${e.message} :=> $e")
+                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+
+
+            override fun onCodeSent(
+                verificationid: String,
+                forceResendingToken: PhoneAuthProvider.ForceResendingToken
+            ) {
+                super.onCodeSent(verificationid, forceResendingToken)
+                Toast.makeText(context, "resend OTP successfully ", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -52,12 +108,14 @@ class OTPVerificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        viewModel.startCountDown()
         _binding = FragmentOTPVerificationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(onBackCallback)
         binding.etOtp.showSoftKeyboard()
         initViews()
         initClicks()
@@ -74,7 +132,11 @@ class OTPVerificationFragment : Fragment() {
             } else {
                 verifyCode(etOtp.text.toString())
             }
+        }
 
+        btnResend.setOnClickListener {
+            viewModel.startCountDown()
+            viewModel.sendOtp(countryCode + phone, mCallback, requireActivity())
         }
 
 
@@ -84,6 +146,16 @@ class OTPVerificationFragment : Fragment() {
         if (verificationCode.isNotBlank()) {
             etOtp.setText(verificationCode)
         }
+
+        tvPhoneDetails.text = resources.getString(R.string.phone_details_text, "$countryCode $phone")
+
+        collectLatestFlow(viewModel.timerText) { time ->
+            btnResend.isEnabled = time == 0
+            tvTimeText.isVisible = time != 0
+            tvTimeText.text = resources.getString(R.string.otp_resend_text, time)
+        }
+
+
     }
 
     private fun verifyCode(code: String) {
@@ -151,16 +223,16 @@ class OTPVerificationFragment : Fragment() {
 
 
     private suspend fun addLocalUser(user: User) {
-            Log.i(TAG, "addLocalUser: $user")
-            context?.userDataStore?.edit { setting ->
-                setting[LocalDataStore.isUserLogin_Key] = true
-                setting[LocalDataStore.userName_Key] = user.userName
-                setting[LocalDataStore.userEmail_Key] = user.userEmail
-                setting[LocalDataStore.userPhone_key] = user.userPhone
-                setting[LocalDataStore.userCountryCode_Key] = user.countryCode
-            }
-
+        Log.i(TAG, "addLocalUser: $user")
+        context?.userDataStore?.edit { setting ->
+            setting[LocalDataStore.isUserLogin_Key] = true
+            setting[LocalDataStore.userName_Key] = user.userName
+            setting[LocalDataStore.userEmail_Key] = user.userEmail
+            setting[LocalDataStore.userPhone_key] = user.userPhone
+            setting[LocalDataStore.userCountryCode_Key] = user.countryCode
         }
+
+    }
 
 
     private suspend fun getUserData(mobile: String) =
