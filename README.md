@@ -4,7 +4,7 @@
 
 Pocket Pass is a simple and secure password manager app. which lets you store your password in local database with encryption. And autofill whenever you need.
 
-<a href="#">
+<a href="https://play.google.com/store/apps/details?id=com.nide.pocketpass">
   <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
 </a>
 
